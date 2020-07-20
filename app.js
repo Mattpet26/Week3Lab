@@ -25,7 +25,7 @@ function handleClickonGoat(event){
     }
     displayGoats();
 
-    if(totalclicks === 4)
+    if(totalclicks === 5)
     var goatList = document.getElementById('list-of-goats');
     goatList.innerHTML = '';
     listOfGoats.removeEventListener('click', handleClickonGoat);
@@ -73,29 +73,5 @@ new Goat('Sweater Goat', 'images/sweater-goat.jpg');
 new Goat('Flying Goat', 'images/flying-goat.jpg');
 new Goat('Boat Goat', 'images/boat-goat.jpg');
 new Goat('Sassy Goat', 'images/sassy-goat.jpg');
-
-/*
-Event listener on the img tags with type click and an event handler
-Event handler:
-  - add 1 to the clicks of the goat image we clicked on
-  - TODO: check if image's src attribute matches the obj
-  - showClicks
-  - display 2 new goat images (displayGoats())
-
-displayGoats(): display 2 new goat iamges
-  - pick 2 goats - randomly based on array indexes
-  - make the first two disappear, reset the content.
-  - display them(renderGoat():)
-
-showClicks() :Show clicks per goat, live (live || after x clicks)
-  - Show each click in a list
-  - use the constuctor's instances for the info
-
-CSS:
-  - Set all image height and width the same
-
-HTML:
-  - 
-
-TODO: on day 13 we will differentiate between live clicks and stored clicks.
-*/
+new Goat('Boat Goat', 'images/boat-goat.jpg');
+new Goat('Sassy Goat', 'images/sassy-goat.jpg');
