@@ -1,0 +1,18 @@
+* {
+  outline: dotted 1px blue;
+}
+
+img {
+  height: 150px;
+  width: 150px;
+  float: left;
+}
+
+body > ul > li > p {
+  float: left;
+  
+}
+
+h1 {
+  margin-bottom: 15px;
+}
