@@ -1,8 +1,8 @@
 //================= Global vars ===========================
 var productArray = [];
 var totalClicks = 0;
-var maxClicks = 25;
-var imageIndexCurrentlyDisplayed =[];
+var maxClicks = 5;
+var previousImageDisplayed =[1, 2, 3];
 
 // ================= Function Definitions =================
 function SkymallProduct(imageName, src){
@@ -32,30 +32,40 @@ SkymallProduct.prototype.renderImageHtml = function() {
 
 
 function renderNewImages(){
+  console.log('entered the function');
   var index1 = Math.floor(Math.random() * productArray.length);
-  while(index1 === imageIndexCurrentlyDisplayed[0] || index1 === imageIndexCurrentlyDisplayed[1]){
-    Math.floor(Math.random() * productArray.length);
+  while(
+    index1 === previousImageDisplayed[0] || 
+    index1 === previousImageDisplayed[1] ||
+    index1 === previousImageDisplayed[2]){
+      index1 = Math.floor(Math.random() * productArray.length);
   }
-
+  console.log('found first index');
   var index2 = Math.floor(Math.random() * productArray.length);
   while(
-    index1 === index2 || 
-    index2 === imageIndexCurrentlyDisplayed[0] || 
-    index2 === imageIndexCurrentlyDisplayed[1]
-   ) {
-      index2 = math.floor(Math.random() * productArray.length);
+    index2 === index1 || 
+    index2 === previousImageDisplayed[0] || 
+    index2 === previousImageDisplayed[1] ||
+    index2 === previousImageDisplayed[2]){
+      index2 = Math.floor(Math.random() * productArray.length);
   }
-
+  console.log('found second index');
   var index3 = Math.floor(Math.random() * productArray.length);
-  while(index2 === index3){
-    index3 = math.floor(Math.random() * productArray.length);
+  while(
+    index3 === index2 || 
+    index3 === index1 ||
+    index3 === previousImageDisplayed[0] || 
+    index3 === previousImageDisplayed[1] ||
+    index3 === previousImageDisplayed[2]){
+      index3 = Math.floor(Math.random() * productArray.length);
   }
-
+  console.log('found third index');
+  previousImageDisplayed = [index1, index2, index3];
+  console.log(previousImageDisplayed)
   var newImage1 = productArray[index1];
   var newImage2 = productArray[index2];
   var newImage3 = productArray[index3];
-  // TODO: make that random
-  // create separate array with a while loop
+
   var busList = document.getElementById('list-of-images');
   busList.innerHTML = '';
   newImage1.renderImageHtml();
@@ -65,7 +75,6 @@ function renderNewImages(){
   newImage3.renderImageHtml();
   newImage3.shown++;
 
-  imageIndexCurrentlyDisplayed[]
 }
 
 
@@ -79,12 +88,13 @@ function handleClickOnImg(event) {
       }
     }
     renderNewImages();
-    //====== this if statement will stop rendering images and display blank
+    renderVotesList();
+    //====== this if statement will stop rendering images and display blank /w votes
     if(totalClicks === maxClicks){
       var busList = document.getElementById('list-of-images');
       busList.innerHTML = '';
       listOfImg.removeEventListener('click', handleClickOnImg);
-      renderVotesList();
+      makeMyChart ();
     }
   }
 }
@@ -92,6 +102,7 @@ function handleClickOnImg(event) {
 
 function renderVotesList(){
   var list = document.getElementById('image-vote');
+  list.innerHTML = '';
   var listItem = document.createElement('li');
   listItem.textContent = 'Votes per product: '
   list.appendChild(listItem);
@@ -113,3 +124,58 @@ new SkymallProduct('Chair', 'images/chair.jpg');
 new SkymallProduct('Toasterboi', 'images/breakfast.jpg');
 new SkymallProduct('Bubbleyum', 'images/bubblegum.jpg');
 new SkymallProduct('Goodboi', 'images/dog-duck.jpg');
+
+renderNewImages()
+
+
+//=============================== Chart =========================
+function makeMyChart (){
+
+var labelArray = [];
+for(var i = 0; i < productArray.length; i++){
+  labelArray.push(productArray[i].imageName)
+}
+
+var imageDataArray = [];
+for(var j =0; j < productArray.length; j++){
+  imageDataArray.push(productArray[j].votes);
+}
+
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labelArray,
+        datasets: [{
+            label: '# of Votes',
+            data: imageDataArray,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}

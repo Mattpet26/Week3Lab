@@ -11,6 +11,9 @@ nav > img {
 
 nav > a {
   font-family: fantasy;
+  padding-top: 20px;
+  padding-left: 15px;
+  float:left;
 }
 
 body {
@@ -46,13 +49,17 @@ body > ul > li > img {
   padding-left: 20px;
 }
 
+body > div:first-of-type {
+  float: left;
+  width: 300px;
+  height: 200px;
+}
+
 body > ul > li > p {
   display: inline;
-  float:left;
+  float: left;
 }
 
-body > div > p {
+body > div:nth-last-of-type(1) {
   padding-top: 300px;
 }
-
-
