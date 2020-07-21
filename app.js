@@ -1,7 +1,7 @@
 //================= Global vars ===========================
 var productArray = [];
 var totalClicks = 0;
-var maxClicks = 5;
+var maxClicks = 25;
 var previousImageDisplayed =[1, 2, 3];
 
 // ================= Function Definitions =================
