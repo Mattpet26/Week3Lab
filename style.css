@@ -16,6 +16,7 @@ nav > a {
 body {
   width: 960px;
   margin: 0;
+  background-color: gainsboro;
 }
 
 body > article {
@@ -29,7 +30,11 @@ body > article {
 
 body > article > p {
   font-family: fantasy;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
+  padding-top: 10px;
+}
+
+body > article > ul > li {
   padding-top: 10px;
 }
 

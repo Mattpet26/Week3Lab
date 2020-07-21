@@ -1,10 +1,10 @@
 //================= Global vars ===========================
 var productArray = [];
 var totalClicks = 0;
-var maxClicks = 5;
+var maxClicks = 25;
 
 // ================= Function Definitions =================
-function busImage(imageName, src){
+function SkymallProduct(imageName, src){
   this.imageName = imageName;
   this.imageSrc = src;
   this.votes = 0;
@@ -13,7 +13,7 @@ function busImage(imageName, src){
 }
 
 //================================ Functions =======
-busImage.prototype.renderImageHtml = function() {
+SkymallProduct.prototype.renderImageHtml = function() {
   var target = document.getElementById('list-of-images');
   var busHomeLi = document.createElement('li');
 
@@ -39,34 +39,32 @@ function handleClickOnImg(event) {
         productArray[imageIndex].votes++;
       }
     }
-
-
-// this if statement controls the total amount of rounds a user is presented with.
-    displayImages();
+    renderNewImages();
+    //====== this if statement will stop rendering images and display blank
     if(totalClicks === maxClicks){
       var busList = document.getElementById('list-of-images');
       busList.innerHTML = '';
       listOfImg.removeEventListener('click', handleClickOnImg);
-      renderVotes();
+      renderVotesList();
     }
   }
 }
 
 
-function renderVotes(){
-  var target = document.getElementById('image-vote');
-  var renderTotalsText = document.createElement('li');
-  renderTotalsText.textContent = 'Totals per product: '
-  target.appendChild(renderTotalsText);
+function renderVotesList(){
+  var list = document.getElementById('image-vote');
+  var listItem = document.createElement('li');
+  listItem.textContent = 'Votes per product: '
+  list.appendChild(listItem);
   for(var i = 0; i < productArray.length; i++){
     var votesLi = document.createElement('li');
     votesLi.textContent = productArray[i].imageName + ': ' + productArray[i].votes + ' votes and was shown ' + productArray[i].shown;
-    target.appendChild(votesLi);
+    list.appendChild(votesLi);
   }
 }
 
 
-function displayImages(){
+function renderNewImages(){
   var index1 = Math.floor(Math.random() * productArray.length);
   var index2 = Math.floor(Math.random() * productArray.length);
   var index3 = Math.floor(Math.random() * productArray.length);
@@ -86,31 +84,12 @@ function displayImages(){
   newImage3.shown++;
 }
 
-// for loops that iterates through
-// events / if / happens at a specific target, then counter ++
-
-
-// ================ Function calls =================
-// event listener on the img tags with type click and an event handler
-// event handler:
-// - add 1 to the clicks of the goat image we clicked on
-//   - TODO: check if the image's `src` attribute matches the object
-//     - showClicks
-//     - display 2 new goat images(displayImages())
 
 var listOfImg = document.getElementById('list-of-images');
 listOfImg.addEventListener('click', handleClickOnImg);
 
 
-
-
-
-
-new busImage('Bathroom', 'images/bathroom.jpg');
-new busImage('Boots', 'images/boots.jpg');
-new busImage('Breakfast', 'images/breakfast.jpg');
-new busImage('Bubbleyum', 'images/bubblegum.jpg');
-
-
-// How do I count clicks per image
-// How do I prevent pictures from duplicating
+new SkymallProduct('Bathroom', 'images/bathroom.jpg');
+new SkymallProduct('Boots', 'images/boots.jpg');
+new SkymallProduct('Toasterboi', 'images/breakfast.jpg');
+new SkymallProduct('Bubbleyum', 'images/bubblegum.jpg');
