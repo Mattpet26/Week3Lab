@@ -1,18 +1,53 @@
-* {
-  outline: dotted 1px blue;
+nav {
+  height: 100px;
+  border-bottom: 1px solid black;
 }
 
-img {
-  height: 150px;
+nav > img {
+  height: 100px;
   width: 150px;
   float: left;
 }
 
-body > ul > li > p {
-  float: left;
-  
+nav > a {
+  font-family: fantasy;
 }
 
-h1 {
-  margin-bottom: 15px;
+body {
+  width: 960px;
+  margin: 0;
 }
+
+body > article {
+  width: 150px;
+  height: 375px;
+  display: float;
+  float: left;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+body > article > p {
+  font-family: fantasy;
+  padding-bottom: 25px;
+  padding-top: 10px;
+}
+
+body > ul > li > img {
+  padding-top: 25px;
+  height: 150px;
+  width: 100px;
+  float: left;
+  padding-left: 20px;
+}
+
+body > ul > li > p {
+  display: inline;
+  float:left;
+}
+
+body > div > p {
+  padding-top: 300px;
+}
+
+

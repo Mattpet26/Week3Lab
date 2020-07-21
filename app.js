@@ -1,16 +1,15 @@
 //================= Global vars ===========================
-var busArray = [];
+var productArray = [];
 var totalClicks = 0;
-
+var maxClicks = 5;
 
 // ================= Function Definitions =================
 function busImage(imageName, src){
-  this.liveClicks = 0;
   this.imageName = imageName;
   this.imageSrc = src;
-  this.totalClicks = 0;
-  this.individualItemClick = 0;
-  busArray.push(this);
+  this.votes = 0;
+  this.shown = 0;
+  productArray.push(this);
 }
 
 //================================ Functions =======
@@ -19,8 +18,8 @@ busImage.prototype.renderImageHtml = function() {
   var busHomeLi = document.createElement('li');
 
   var busImg = document.createElement('img');
-  busImg.src = this.imageSrc;
   busImg.alt = this.imageName;
+  busImg.src = this.imageSrc;
   busHomeLi.appendChild(busImg);
 
   var imageTextp = document.createElement('p');
@@ -32,53 +31,64 @@ busImage.prototype.renderImageHtml = function() {
 
 
 function handleClickOnImg(event) {
-  console.log(event.target);
+  console.log(event.target.alt);
   if (event.target.tagName === 'IMG') {
     totalClicks++;
-    for (var imageIndex = 0; imageIndex < busArray.length; imageIndex++) {
-      if (busArray[imageIndex].imageSrc === event.target.getAttribute('src')) {
-        console.log(totalClicks);
-        busArray[imageIndex].liveClicks++;
+    for (var imageIndex = 0; imageIndex < productArray.length; imageIndex++) {
+      if (productArray[imageIndex].imageSrc === event.target.getAttribute('src')) {
+        productArray[imageIndex].votes++;
       }
     }
 
+
 // this if statement controls the total amount of rounds a user is presented with.
     displayImages();
-    if(totalClicks === 20){
+    if(totalClicks === maxClicks){
       var busList = document.getElementById('list-of-images');
       busList.innerHTML = '';
       listOfImg.removeEventListener('click', handleClickOnImg);
+      renderVotes();
     }
   }
 }
 
 
+function renderVotes(){
+  var target = document.getElementById('image-vote');
+  var renderTotalsText = document.createElement('li');
+  renderTotalsText.textContent = 'Totals per product: '
+  target.appendChild(renderTotalsText);
+  for(var i = 0; i < productArray.length; i++){
+    var votesLi = document.createElement('li');
+    votesLi.textContent = productArray[i].imageName + ': ' + productArray[i].votes + ' votes and was shown ' + productArray[i].shown;
+    target.appendChild(votesLi);
+  }
+}
+
+
 function displayImages(){
-  var index1 = Math.floor(Math.random() * busArray.length);
-  var index2 = Math.floor(Math.random() * busArray.length);
-  var index3 = Math.floor(Math.random() * busArray.length);
+  var index1 = Math.floor(Math.random() * productArray.length);
+  var index2 = Math.floor(Math.random() * productArray.length);
+  var index3 = Math.floor(Math.random() * productArray.length);
 
-  var newImage1 = busArray[index1];
-  var newImage2 = busArray[index2];
-  var newImage3 = busArray[index3];
+  var newImage1 = productArray[index1];
+  var newImage2 = productArray[index2];
+  var newImage3 = productArray[index3];
   // TODO: make that random
-
+  // create separate array with a while loop
   var busList = document.getElementById('list-of-images');
   busList.innerHTML = '';
   newImage1.renderImageHtml();
+  newImage1.shown++;
   newImage2.renderImageHtml();
+  newImage2.shown++;
   newImage3.renderImageHtml();
+  newImage3.shown++;
 }
 
-// function displayVote(){
-//   var target = document.getElementById('image-vote');
-//   var list = document.createAttribute('li');
-//   var totalVotesP = document.createAttribute('p');
-//   totalVotesP.textContent = 'You voted ' + totalClicks + ' times. Thank you!';
-//   list.appendChild(totalVotesP);
-//   target.appendChild(list);
-// }
-// displayVote();
+// for loops that iterates through
+// events / if / happens at a specific target, then counter ++
+
 
 // ================ Function calls =================
 // event listener on the img tags with type click and an event handler
