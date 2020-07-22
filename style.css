@@ -24,7 +24,7 @@ body {
 
 body > article {
   width: 150px;
-  height: 375px;
+  height: 600px;
   display: float;
   float: left;
   border-right: 1px solid black;
