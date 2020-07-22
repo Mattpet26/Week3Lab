@@ -1,15 +1,15 @@
 //================= Global vars ===========================
 SkymallProduct.productArray = [];
 var totalClicks = 0;
-var maxClicks = 5;
+var maxClicks = 1;
 var previousImageDisplayed =[1, 2, 3];
 
 // ================= Function Definitions =================
-function SkymallProduct(imageName, src){
+function SkymallProduct(imageName, src, votes, shown){
   this.imageName = imageName;
   this.imageSrc = src;
-  this.votes = 0;
-  this.shown = 0;
+  this.votes = votes;
+  this.shown = shown;
   SkymallProduct.productArray.push(this);
 }
 
@@ -80,8 +80,9 @@ function handleClickOnImg(event) {
         SkymallProduct.productArray[imageIndex].votes++;
       }
     }
+    saveLocalVotes();
     renderNewImages();
-    renderVotesList();
+    // renderVotesList();
     if(totalClicks === maxClicks){
       var busList = document.getElementById('list-of-images');
       busList.innerHTML = '';
@@ -91,85 +92,61 @@ function handleClickOnImg(event) {
   }
 }
 
-
-function renderVotesList(){
-  var list = document.getElementById('image-vote');
-  list.innerHTML = '';
-  var listItem = document.createElement('li');
-  listItem.textContent = 'Votes per product: '
-  list.appendChild(listItem);
-  for(var i = 0; i < SkymallProduct.productArray.length; i++){
-    var votesLi = document.createElement('li');
-    votesLi.textContent = SkymallProduct.productArray[i].imageName + ': ' + SkymallProduct.productArray[i].votes + ' votes and was shown ' + SkymallProduct.productArray[i].shown;
-    list.appendChild(votesLi);
-  }
-}
-
-function saveLocalVotes(){
-
-}
-
-function displayLocalSavedVotes(){
-
-}
+// function renderVotesList(){
+//   var list = document.getElementById('image-vote');
+//   list.innerHTML = '';
+//   var listItem = document.createElement('li');
+//   listItem.textContent = 'Votes per product: '
+//   list.appendChild(listItem);
+//   for(var i = 0; i < SkymallProduct.productArray.length; i++){
+//     var votesLi = document.createElement('li');
+//     votesLi.textContent = SkymallProduct.productArray[i].imageName + ': ' + SkymallProduct.productArray[i].votes + ' votes and was shown ' + SkymallProduct.productArray[i].shown;
+//     list.appendChild(votesLi);
+//   }
+// }
 
 //============================== event listener ==================
 var listOfImg = document.getElementById('list-of-images');
 listOfImg.addEventListener('click', handleClickOnImg);
 
 //============================= new images ======================
-new SkymallProduct('R2-D2', 'images/bag.jpg');
-new SkymallProduct('Banana', 'images/banana.jpg');
-new SkymallProduct('Chair', 'images/chair.jpg');
-new SkymallProduct('Toasterboi', 'images/breakfast.jpg');
-new SkymallProduct('Bubbleyum', 'images/bubblegum.jpg');
-new SkymallProduct('Goodboi', 'images/dog-duck.jpg');
-// new SkymallProduct('Dragon', 'images/dragon.jpg');
-// new SkymallProduct('Pen', 'images/pen.jpg');
-// new SkymallProduct('PetSweeper', 'images/pet-sweep.jpg');
-// new SkymallProduct('Scissors', 'images/scissors.jpg');
-// new SkymallProduct('Sharkie', 'images/shark.jpg');
-// new SkymallProduct('Sweeper', 'images/sweep.png');
-
+var arrayFromLocalStorage = localStorage.getItem('productArray');
+  if(arrayFromLocalStorage !== null){
+    var parsedArray = JSON.parse(arrayFromLocalStorage);
+    for(i = 0; i < parsedArray.length; i++){
+      var parsedName = parsedArray[i].imageName;
+      var parsedImg = parsedArray[i].imageSrc;
+      var parsedVotes = parsedArray[i].votes;
+      var parsedShown = parsedArray[i].shown;
+      new SkymallProduct(parsedName, parsedImg, parsedVotes, parsedShown)
+    }
+  } else {
+  new SkymallProduct('R2-D2', 'images/bag.jpg', 0, 0);
+  new SkymallProduct('Banana', 'images/banana.jpg', 0, 0);
+  new SkymallProduct('Chair', 'images/chair.jpg', 0, 0);
+  new SkymallProduct('Toasterboi', 'images/breakfast.jpg', 0, 0);
+  new SkymallProduct('Bubbleyum', 'images/bubblegum.jpg', 0, 0);
+  new SkymallProduct('Goodboi', 'images/dog-duck.jpg', 0, 0);
+  new SkymallProduct('Dragon', 'images/dragon.jpg', 0, 0);
+  new SkymallProduct('Pen', 'images/pen.jpg', 0, 0);
+  new SkymallProduct('PetSweeper', 'images/pet-sweep.jpg', 0, 0);
+  new SkymallProduct('Scissors', 'images/scissors.jpg', 0, 0);
+  new SkymallProduct('Sharkie', 'images/shark.jpg', 0, 0);
+  new SkymallProduct('Sweeper', 'images/sweep.png', 0, 0);
+  new SkymallProduct('TaunTaun', 'images/tauntaun.jpg', 0, 0);
+  new SkymallProduct('Unicorn', 'images/unicorn.jpg', 0, 0);
+  new SkymallProduct('Usb', 'images/usb.gif', 0, 0);
+  new SkymallProduct('Water', 'images/water-can.jpg', 0, 0);
+  new SkymallProduct('Wine', 'images/wineglass.jpg', 0, 0);
+}
 renderNewImages()
 
 //======================= local storage ==========================
-// function Cat(name, humanScratched){
-//   this.name = name;
-//   this.humanScratched = humanScratched;
-// }
-// Cat.prototype.brag = function(){
-//   console.log('I scratched ' + humanSCratched + ' times');
-// }
-
-// var snowdrop = new Cat('snowdrop', 0);
-
-// snowdrop.humanSCratched++;
-// snowdrop.humanSCratched++;
-// snowdrop.humanSCratched++;
-// //this is what saves the info
-// var stringySnow = JSON.stringify(snowdrop);
-// localStorage.setItem('snowdrop', stringySnow);
-// //this passes it from storage back to page. put at bottom of page.
-// var lsSnow = localStorage.getItems('snowdrop');
-// var parsedSnow = JSON.parse(lsSNow);
-
-// var reconsitutedSnowDrop = new Cat(parsedSnow.name, parsedSnow.humanScratched);
-// reconstitutedSnowDrop.brag();
-
-//stringified and stored in local storage
-//retrieved from local storage and parsed
-// now pass our parsed object through constructor so we have prototype methods
-
-//expected behavior: snowdrop has 5 scratches
-//actual outcome: snowdrop had 0 scratches
-//reason: constructor only takes in a name parameter
-//resolution: give the constructor a parameter for scratches
-
-//expected: snowdrop has 5 scratches
-// outcome: snowdrop had null scratches
-//reason: when snowdrop was made, we did not pass scratch count
-// resolution: update original constuctor instance to pass parameter
+function saveLocalVotes(){
+  var stringyName = JSON.stringify(SkymallProduct.productArray);
+  localStorage.setItem('productArray', stringyName); 
+  console.log(stringyName);
+}
 
 //=============================== Chart =========================
 function makeMyChart (){
@@ -203,9 +180,21 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
@@ -223,9 +212,21 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
