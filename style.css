@@ -1,3 +1,9 @@
+body {
+  width: 960px;
+  margin: auto;
+  background-color: gainsboro;
+}
+
 nav {
   height: 100px;
   border-bottom: 1px solid black;
@@ -16,31 +22,6 @@ nav > a {
   float:left;
 }
 
-body {
-  width: 960px;
-  margin: 0;
-  background-color: gainsboro;
-}
-
-body > article {
-  width: 150px;
-  height: 600px;
-  display: float;
-  float: left;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-body > article > p {
-  font-family: fantasy;
-  padding-bottom: 15px;
-  padding-top: 10px;
-}
-
-body > article > ul > li {
-  padding-top: 10px;
-}
-
 body > ul > li > img {
   padding-top: 25px;
   height: 150px;
@@ -49,17 +30,29 @@ body > ul > li > img {
   padding-left: 20px;
 }
 
-body > div:first-of-type {
-  float: left;
-  width: 300px;
-  height: 200px;
-}
-
 body > ul > li > p {
-  display: inline;
   float: left;
 }
 
-body > div:nth-last-of-type(1) {
-  padding-top: 300px;
+body > div {
+  float:left;
+  width: 400px;
+  height: 1px;  
+  padding-bottom: 330px;
+}
+
+body > article > ul > li {
+  padding-top: 10px;
+}
+
+body > article {
+  float: left;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+body > article > p {
+  font-family: fantasy;
+  padding-bottom: 15px;
+  padding-top: 10px;
 }
